@@ -148,6 +148,49 @@
               </v-container>
             </v-card>
           </v-dialog>
+          <v-dialog
+            v-model="deleteDialog"
+            hide-overlay
+            persistent
+            transition="dialog-bottom-transition"
+            width="500px"
+          >
+            <template #activator="{ on, attrs }">
+              <v-icon v-bind="attrs" color="secondary" class="ml-2" v-on="on"
+                >mdi-delete</v-icon
+              >
+            </template>
+            <v-card>
+              <v-card-title class="text-h5">
+                Delete {{ updatedCurrentRegistry.name }} registry ?
+              </v-card-title>
+              <v-card-text>
+                If you delete this registry, you won't be able to access it
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  elevation="0"
+                  color="primary"
+                  outlined
+                  @click="deleteDialog = false"
+                >
+                  CANCEL
+                </v-btn>
+                <v-btn
+                  elevation="0"
+                  color="primary"
+                  @click.stop="
+                    deleteRegistry(updatedCurrentRegistry)
+                    deleteDialog = false
+                    editDialog = false
+                  "
+                >
+                  DELETE
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-container>
       </v-card>
     </v-dialog>
@@ -163,6 +206,7 @@ export default {
     currentListItem: null,
     editDialog: null,
     shareDialog: null,
+    deleteDialog: null,
     snackbar: null,
     snackbarMessage: null,
     updatedCurrentRegistry: null,
@@ -178,7 +222,11 @@ export default {
     await this.fetchRegistries()
   },
   methods: {
-    ...mapActions('registries', ['fetchRegistries', 'updateRegistry']),
+    ...mapActions('registries', [
+      'fetchRegistries',
+      'updateRegistry',
+      'deleteRegistry',
+    ]),
     ...mapMutations('registries', ['setCurrentRegistry']),
     ...mapActions('shared-registries', ['shareRegistry']),
     ...mapActions('users', ['fetchCurrentUser']),
