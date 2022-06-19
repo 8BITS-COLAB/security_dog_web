@@ -66,8 +66,11 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    font: {
-      family: 'Poppins',
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: 'Poppins',
+      },
     },
     theme: {
       dark: false,
