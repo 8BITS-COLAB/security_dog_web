@@ -37,11 +37,13 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <img
+          id="logo"
           src="~/assets/logo.png"
           width="140"
           height="80"
           alt="Security Dog logo"
           class="mt-3"
+          @click="$router.push('/')"
         />
       </v-toolbar-title>
       <v-spacer />
@@ -78,3 +80,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#logo {
+  cursor: pointer;
+}
+</style>
