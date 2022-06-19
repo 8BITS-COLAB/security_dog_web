@@ -10,8 +10,7 @@
       </template>
     </v-snackbar>
     <v-dialog
-      v-model="dialog"
-      persistent
+      v-model="editDialog"
       hide-overlay
       transition="dialog-bottom-transition"
       width="500px"
@@ -38,7 +37,7 @@
       </template>
       <v-card v-if="updatedCurrentRegistry">
         <v-toolbar dark color="secondary">
-          <v-btn icon dark @click.stop="dialog = false">
+          <v-btn icon dark @click.stop="editDialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ updatedCurrentRegistry.name }}</v-toolbar-title>
@@ -50,7 +49,7 @@
               :disabled="isSaveButtonDisabled"
               @click.stop="saveChanges"
             >
-              Save
+              SAVE
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>
@@ -66,21 +65,89 @@
             required
             label="Site URL"
             :rules="siteRules"
+            append-icon="mdi-open-in-new"
+            @click:append="openInNewTab(updatedCurrentRegistry.site_url)"
           />
           <v-text-field
             v-model="updatedCurrentRegistry.login"
             required
             label="Login"
             :rules="loginRules"
+            append-icon="mdi-content-copy"
+            @click:append="copy(updatedCurrentRegistry.login)"
           />
           <v-text-field
             v-model="updatedCurrentRegistry.password"
             required
             label="Password"
             :rules="passwordRules"
-            type="password"
-            @click.stop="copy(updatedCurrentRegistry.password)"
+            :type="isPasswordVisible ? 'text' : 'password'"
+            :append-outer-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+            append-icon="mdi-content-copy"
+            @click:append-outer="setPasswordVisibility"
+            @click:append="copy(updatedCurrentRegistry.password)"
           />
+          <v-dialog
+            v-model="shareDialog"
+            hide-overlay
+            transition="dialog-bottom-transition"
+            width="500px"
+          >
+            <template #activator="{ on, attrs }">
+              <v-icon
+                v-bind="attrs"
+                color="primary lighten-4"
+                class="ml-2"
+                v-on="on"
+                >mdi-share</v-icon
+              >
+            </template>
+            <v-card>
+              <v-toolbar dark color="secondary">
+                <v-btn icon dark @click.stop="editDialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>{{
+                  updatedCurrentRegistry.name
+                }}</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn
+                    dark
+                    text
+                    :disabled="isShareButtonDisabled"
+                    @click.stop="shareCurrentRegistry"
+                  >
+                    SHARE
+                  </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <v-container fluid>
+                <v-text-field
+                  v-model="sharedRegistry.password"
+                  required
+                  label="Password"
+                  :rules="passwordRules"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :append-outer-icon="
+                    isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'
+                  "
+                  append-icon="mdi-content-copy"
+                  @click:append-outer="setPasswordVisibility"
+                  @click:append="copy(sharedRegistry.password)"
+                />
+                <p>EXPIRES AT</p>
+                <v-radio-group v-model="sharedRegistry.expiresAt" mandatory>
+                  <v-radio
+                    v-for="(option, i) in sharedRegistryExpiresAtOptions"
+                    :key="i"
+                    :label="option.label"
+                    :value="option.value"
+                  ></v-radio>
+                </v-radio-group>
+              </v-container>
+            </v-card>
+          </v-dialog>
         </v-container>
       </v-card>
     </v-dialog>
@@ -94,10 +161,17 @@ export default {
   name: 'IndexPage',
   data: () => ({
     currentListItem: null,
-    dialog: null,
+    editDialog: null,
+    shareDialog: null,
     snackbar: null,
     snackbarMessage: null,
     updatedCurrentRegistry: null,
+    isPasswordVisible: false,
+    sharedRegistry: {
+      registryId: '',
+      password: '',
+      expiresAt: '1m',
+    },
   }),
   async fetch() {
     await this.fetchCurrentUser()
@@ -106,7 +180,11 @@ export default {
   methods: {
     ...mapActions('registries', ['fetchRegistries', 'updateRegistry']),
     ...mapMutations('registries', ['setCurrentRegistry']),
+    ...mapActions('shared-registries', ['shareRegistry']),
     ...mapActions('users', ['fetchCurrentUser']),
+    setPasswordVisibility() {
+      this.isPasswordVisible = !this.isPasswordVisible
+    },
     async copy(value) {
       await navigator.clipboard.writeText(value)
       this.snackbarMessage = 'Copied to clipboard'
@@ -116,7 +194,18 @@ export default {
       await this.updateRegistry(this.updatedCurrentRegistry)
       this.snackbarMessage = 'Registry updated'
       this.snackbar = true
-      this.dialog = false
+      this.editDialog = false
+    },
+    async shareCurrentRegistry() {
+      const { key } = await this.shareRegistry(this.sharedRegistry)
+      this.snackbarMessage = 'Registry shared'
+      this.snackbar = true
+      this.shareDialog = false
+
+      this.copy(key)
+    },
+    openInNewTab(url) {
+      window.open(url, '_blank')
     },
   },
   computed: {
@@ -124,10 +213,45 @@ export default {
       registries: 'getRegistries',
       currentRegistry: 'getCurrentRegistry',
     }),
+    sharedRegistryExpiresAtOptions() {
+      return [
+        {
+          label: '1 minute',
+          value: '1m',
+        },
+        {
+          label: '5 minutes',
+          value: '5m',
+        },
+        {
+          label: '30 minutes',
+          value: '30m',
+        },
+        {
+          label: '1 hour',
+          value: '1h',
+        },
+        {
+          label: '6 hours',
+          value: '6h',
+        },
+        {
+          label: '1 day',
+          value: '1d',
+        },
+      ]
+    },
     isSaveButtonDisabled() {
       return (
         JSON.stringify(this.updatedCurrentRegistry) ===
         JSON.stringify(this.currentRegistry)
+      )
+    },
+    isShareButtonDisabled() {
+      return (
+        this.sharedRegistry.password.length < 6 ||
+        !this.sharedRegistry.registryId ||
+        !this.sharedRegistry.expiresAt
       )
     },
     loginRules() {
@@ -173,6 +297,8 @@ export default {
       handler(newVal, oldVal) {
         if (newVal !== oldVal) {
           this.updatedCurrentRegistry = { ...newVal }
+
+          this.sharedRegistry.registryId = newVal?.id
         }
       },
       deep: true,

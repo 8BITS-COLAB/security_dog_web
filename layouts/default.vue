@@ -64,8 +64,13 @@ export default {
       items: [
         {
           icon: 'mdi-lock',
-          title: 'Registries',
+          title: 'REGISTRIES',
           to: '/',
+        },
+        {
+          icon: 'mdi-link-lock',
+          title: 'SHARED',
+          to: '/shared_registries',
         },
       ],
       title: 'Security Dog',

@@ -1,11 +1,11 @@
 import { User } from '../types/user'
 
 type State = {
-  currentUser: User
+  currentUser: User | null
 }
 
-export const state = () => ({
-  currentUser: {},
+export const state = (): State => ({
+  currentUser: null,
 })
 
 export const getters = {

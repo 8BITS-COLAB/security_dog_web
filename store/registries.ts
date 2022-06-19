@@ -2,12 +2,12 @@ import { Registry } from '~/types/registry'
 
 type State = {
   registries: Registry[]
-  currentRegistry: Registry
+  currentRegistry: Registry | null
 }
 
-export const state = () => ({
+export const state = (): State => ({
   registries: [],
-  currentRegistry: null as Registry | null,
+  currentRegistry: null,
 })
 
 export const getters = {

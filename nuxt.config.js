@@ -2,6 +2,11 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0', // default: localhost,
+    timing: false,
+  },
   head: {
     titleTemplate: '%s - security_dog_web',
     title: 'security_dog_web',
@@ -78,10 +83,6 @@ export default {
         light: {
           primary: '#293462',
           secondary: '#F24C4C',
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
         },
       },
     },
