@@ -11,13 +11,14 @@
     </v-snackbar>
     <v-dialog
       v-model="dialog"
+      persistent
       hide-overlay
       transition="dialog-bottom-transition"
       width="500px"
     >
       <template #activator="{ on, attrs }">
         <v-list>
-          <v-list-item-group v-model="currentListItem" color="primary">
+          <v-list-item-group v-model="currentListItem" color="secondary">
             <v-list-item
               v-for="(registry, i) in registries"
               :key="i"
@@ -36,7 +37,7 @@
         </v-list>
       </template>
       <v-card v-if="updatedCurrentRegistry">
-        <v-toolbar dark color="primary">
+        <v-toolbar dark color="secondary">
           <v-btn icon dark @click.stop="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -77,6 +78,7 @@
             required
             label="Password"
             :rules="passwordRules"
+            type="password"
             @click.stop="copy(updatedCurrentRegistry.password)"
           />
         </v-container>

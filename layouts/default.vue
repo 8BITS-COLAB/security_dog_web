@@ -27,14 +27,23 @@
     </v-navigation-drawer>
     <v-app-bar
       elevation="0"
-      color="transparent"
       :clipped-left="clipped"
       fixed
+      color="transparent"
       app
+      class="d-flex justify-flex-start align-center"
       hide-on-scroll
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title class="font-weight-bold" v-text="title" />
+      <v-toolbar-title>
+        <img
+          src="~/assets/logo.png"
+          width="140"
+          height="80"
+          alt="Security Dog logo"
+          class="mt-3"
+        />
+      </v-toolbar-title>
       <v-spacer />
     </v-app-bar>
     <v-main>
