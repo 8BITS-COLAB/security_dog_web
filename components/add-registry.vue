@@ -1,14 +1,5 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar">
-      {{ snackbarMessage }}
-
-      <template #action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       fullscreen
@@ -27,19 +18,14 @@
         </v-btn>
       </template>
       <v-card>
-        <v-toolbar color="secondary">
-          <v-btn icon @click="dialog = false">
+        <v-toolbar dark color="secondary">
+          <v-btn dark icon @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>{{ registry.name }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn
-              :disabled="isCreateButtonEnabled"
-              text
-              color="white"
-              @click="submit"
-            >
+            <v-btn :disabled="isCreateButtonEnabled" dark text @click="submit">
               CREATE
             </v-btn>
           </v-toolbar-items>
@@ -48,27 +34,36 @@
         <v-container fluid>
           <v-text-field
             v-model="registry.name"
-            :rules="nameRules"
             required
             label="Name"
+            :rules="nameRules"
+            append-icon="mdi-content-copy"
+            @click:append="copy(registry.login)"
           />
           <v-text-field
             v-model="registry.site_url"
-            :rules="siteRules"
             required
             label="Site URL"
+            :rules="siteRules"
           />
           <v-text-field
             v-model="registry.login"
-            :rules="loginRules"
             required
             label="Login"
+            :rules="loginRules"
+            append-icon="mdi-content-copy"
+            @click:append="copy(registry.login)"
           />
           <v-text-field
             v-model="registry.password"
-            :rules="passwordRules"
             required
             label="Password"
+            :rules="passwordRules"
+            :type="isPasswordVisible ? 'text' : 'password'"
+            :append-outer-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+            append-icon="mdi-content-copy"
+            @click:append-outer="setPasswordVisibility"
+            @click:append="copy(registry.password)"
           />
         </v-container>
       </v-card>
@@ -85,8 +80,7 @@ export default {
     notifications: false,
     sound: true,
     widgets: false,
-    snackbarMessage: null,
-    snackbar: false,
+    isPasswordVisible: false,
     registry: {
       name: '',
       site_url: '',
@@ -100,14 +94,20 @@ export default {
       try {
         await this.createRegistry(this.registry)
 
-        this.snackbarMessage = 'Registry created'
-        this.snackbar = true
+        this.$emit('on-add-registry', 'Registry created')
       } catch (error) {
-        this.snackbarMessage = 'Error on create registry'
-        this.snackbar = true
+        this.$emit('on-add-registry', 'Error on creating registry')
       } finally {
         this.dialog = false
       }
+    },
+    async copy(value) {
+      await navigator.clipboard.writeText(value)
+      this.snackbarMessage = 'Copied to clipboard'
+      this.snackbar = true
+    },
+    setPasswordVisibility() {
+      this.isPasswordVisible = !this.isPasswordVisible
     },
   },
   computed: {

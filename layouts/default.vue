@@ -1,5 +1,14 @@
 <template>
   <v-app dark>
+    <v-snackbar v-model="snackbar">
+      {{ snackbarMessage }}
+
+      <template #action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-navigation-drawer
       color="primary"
       fixed
@@ -46,7 +55,7 @@
           @click="$router.push('/')"
         />
       </v-toolbar-title>
-      <add-registry />
+      <add-registry @on-add-registry="onAddRegistry" />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -63,6 +72,8 @@ export default {
     return {
       clipped: false,
       drawer: false,
+      snackbar: false,
+      snackbarMessage: '',
       items: [
         {
           icon: 'mdi-lock',
@@ -70,13 +81,19 @@ export default {
           to: '/',
         },
         {
-          icon: 'mdi-link-lock',
-          title: 'SHARED',
-          to: '/shared_registries',
+          icon: 'mdi-devices',
+          title: 'LINKED DEVICES',
+          to: '/linked_devices',
         },
       ],
       title: 'Security Dog',
     }
+  },
+  methods: {
+    onAddRegistry(message) {
+      this.snackbarMessage = message
+      this.snackbar = true
+    },
   },
 }
 </script>

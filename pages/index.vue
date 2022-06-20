@@ -53,6 +53,8 @@
             required
             label="Name"
             :rules="nameRules"
+            append-icon="mdi-content-copy"
+            @click:append="copy(registry.login)"
           />
           <v-text-field
             v-model="updatedCurrentRegistry.site_url"
@@ -166,7 +168,7 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   elevation="0"
-                  color="primary"
+                  color="secondary"
                   outlined
                   @click="deleteDialog = false"
                 >
@@ -174,7 +176,7 @@
                 </v-btn>
                 <v-btn
                   elevation="0"
-                  color="primary"
+                  color="secondary"
                   @click.stop="
                     deleteRegistry(updatedCurrentRegistry)
                     deleteDialog = false
