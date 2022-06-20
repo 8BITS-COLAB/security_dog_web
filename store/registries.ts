@@ -40,6 +40,14 @@ export const actions = {
 
     dispatch('fetchRegistries')
   },
+  async createRegistry({ dispatch, rootState }: any, registry: Registry) {
+    await (this as any).$axios.$post(
+      `/users/${rootState.users.currentUser.id}/registries`,
+      { registry }
+    )
+
+    dispatch('fetchRegistries')
+  },
   async deleteRegistry({ dispatch, rootState }: any, registry: Registry) {
     await (this as any).$axios.$delete(
       `/users/${rootState.users.currentUser.id}/registries/${registry.id}`,

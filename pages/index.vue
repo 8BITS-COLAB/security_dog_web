@@ -14,24 +14,18 @@
       hide-overlay
       transition="dialog-bottom-transition"
       width="500px"
+      fullscreen
     >
       <template #activator="{ on, attrs }">
         <v-list>
           <v-list-item-group v-model="currentListItem" color="secondary">
-            <v-list-item
+            <registry-list-item
               v-for="(registry, i) in registries"
               :key="i"
-              v-bind="attrs"
-              v-on.native="on"
-              @click.stop="setCurrentRegistry(registry)"
-            >
-              <v-list-item-icon>
-                <v-icon> mdi-lock</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="registry.name"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+              :attrs="attrs"
+              :registry="registry"
+              :on="on"
+            />
           </v-list-item-group>
         </v-list>
       </template>
@@ -58,7 +52,7 @@
             v-model="updatedCurrentRegistry.name"
             required
             label="Name"
-            :rules="usernameRules"
+            :rules="nameRules"
           />
           <v-text-field
             v-model="updatedCurrentRegistry.site_url"
@@ -89,6 +83,7 @@
           />
           <v-dialog
             v-model="shareDialog"
+            persistent
             hide-overlay
             transition="dialog-bottom-transition"
             width="500px"
@@ -199,9 +194,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import AddRegistry from '~/components/add-registry.vue'
+import registryListItem from '~/components/registry-list-item.vue'
 
 export default {
   name: 'IndexPage',
+  components: { registryListItem, AddRegistry },
   data: () => ({
     currentListItem: null,
     editDialog: null,
@@ -320,7 +318,7 @@ export default {
           ]
         : [(v) => !!v || 'Password is required']
     },
-    usernameRules() {
+    nameRules() {
       return this.currentRegistry
         ? [
             (v) => !!v || 'Username is required',

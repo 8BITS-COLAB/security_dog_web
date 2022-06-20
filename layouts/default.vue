@@ -46,7 +46,7 @@
           @click="$router.push('/')"
         />
       </v-toolbar-title>
-      <v-spacer />
+      <add-registry />
     </v-app-bar>
     <v-main>
       <v-container fluid>
