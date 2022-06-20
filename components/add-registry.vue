@@ -2,9 +2,10 @@
   <div>
     <v-dialog
       v-model="dialog"
-      fullscreen
+      width="400px"
       hide-overlay
       transition="dialog-bottom-transition"
+      persistent
     >
       <template #activator="{ on, attrs }">
         <v-btn
@@ -38,13 +39,15 @@
             label="Registry Name"
             :rules="nameRules"
             append-icon="mdi-content-copy"
-            @click:append="copy(registry.login)"
+            @click:append="copy(registry.name)"
           />
           <v-text-field
             v-model="registry.site_url"
             required
             label="Site URL"
             :rules="siteRules"
+            append-icon="mdi-content-copy"
+            @click:append="copy(registry.site_url)"
           />
           <v-text-field
             v-model="registry.login"
@@ -94,9 +97,9 @@ export default {
       try {
         await this.createRegistry(this.registry)
 
-        this.$emit('on-add-registry', 'Registry created')
+        this.$emit('on-event', 'Registry created')
       } catch (error) {
-        this.$emit('on-add-registry', 'Error on creating registry')
+        this.$emit('on-event', 'Error on creating registry')
       } finally {
         this.dialog = false
         this.registry = {
@@ -109,8 +112,8 @@ export default {
     },
     async copy(value) {
       await navigator.clipboard.writeText(value)
-      this.snackbarMessage = 'Copied to clipboard'
-      this.snackbar = true
+
+      this.$emit('on-event', 'Copied to clipboard')
     },
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible

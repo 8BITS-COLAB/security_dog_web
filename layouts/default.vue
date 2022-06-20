@@ -55,10 +55,7 @@
           @click="$router.push('/')"
         />
       </v-toolbar-title>
-      <add-registry
-        v-show="$route.path === '/'"
-        @on-add-registry="onAddRegistry"
-      />
+      <add-registry v-show="$route.path === '/'" @on-event="onEvent" />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -96,7 +93,7 @@ export default {
   },
   methods: {
     ...mapActions('users', ['fetchCurrentUser']),
-    onAddRegistry(message) {
+    onEvent(message) {
       this.snackbarMessage = message
       this.snackbar = true
     },

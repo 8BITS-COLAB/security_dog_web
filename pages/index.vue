@@ -53,7 +53,7 @@
           <v-text-field
             v-model="updatedCurrentRegistry.name"
             required
-            label="Name"
+            label="Registry Name"
             :rules="nameRules"
             append-icon="mdi-content-copy"
             @click:append="copy(registry.login)"
@@ -244,11 +244,15 @@ export default {
     },
     async shareCurrentRegistry() {
       const { key } = await this.shareRegistry(this.sharedRegistry)
-      this.snackbarMessage = 'Registry shared'
+      this.snackbarMessage = 'Link copied to clipboard'
       this.snackbar = true
       this.shareDialog = false
 
-      this.copy(key)
+      this.copy(
+        `${
+          process.env.HOST || 'http://localhost:3000'
+        }/shared_registries/${key}`
+      )
     },
     openInNewTab(url) {
       window.open(url, '_blank')

@@ -24,7 +24,7 @@
         <span>UNLINK DEVICE</span>
       </v-tooltip>
     </v-list-item>
-    <v-divider />
+    <v-divider v-show="linkedDevices.length" />
   </v-list>
 </template>
 
