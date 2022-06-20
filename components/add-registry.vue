@@ -35,7 +35,7 @@
           <v-text-field
             v-model="registry.name"
             required
-            label="Name"
+            label="Registry Name"
             :rules="nameRules"
             append-icon="mdi-content-copy"
             @click:append="copy(registry.login)"
@@ -99,6 +99,12 @@ export default {
         this.$emit('on-add-registry', 'Error on creating registry')
       } finally {
         this.dialog = false
+        this.registry = {
+          name: '',
+          site_url: '',
+          login: '',
+          password: '',
+        }
       }
     },
     async copy(value) {

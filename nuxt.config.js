@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   server: {
@@ -54,7 +52,7 @@ export default {
       'Content-Type': 'application/json',
       Accept: 'application/json',
       Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzZWN1cml0eV9kb2dfYXBpIiwiZXhwIjoxNjU4MDY2Mzg2LCJpYXQiOjE2NTU2NDcxODYsImlzcyI6InNlY3VyaXR5X2RvZ19hcGkiLCJqdGkiOiJhYjVjYWRhMC01OTQyLTQwMzUtYmRmNC1lYTJmZDI1MzJlOGEiLCJuYmYiOjE2NTU2NDcxODUsInN1YiI6ImY5NTE5ZmJjLTMyOWUtNGUyMi1hOTgyLWFjNDU0MGQ1MTI0NCIsInR5cCI6ImFjY2VzcyJ9.cRewdbKHQVFzK0JhDblz24ykFjMYBKf5e0awcFhMiyMpnE43bPAue_M4AbGrMd6-ceHVXiJ9lYE7g83XlN0lhQ',
+        'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzZWN1cml0eV9kb2dfYXBpIiwiZXhwIjoxNjU4MTgxODI0LCJpYXQiOjE2NTU3NjI2MjQsImlzcyI6InNlY3VyaXR5X2RvZ19hcGkiLCJqdGkiOiJlY2M0ODgwNS0wNDdiLTRlNDYtYWQ3Ni1hZDQwOGM0OTE2MzkiLCJuYmYiOjE2NTU3NjI2MjMsInN1YiI6ImE3ZTgzYzI3LTZkNTAtNGNhZi04YzJhLWU2M2NhZjNiMzBiNiIsInR5cCI6ImFjY2VzcyJ9.7RJ5ON8rPS-vbSTBkrUQ144AxR3qt2rmQUJnp3djR0MIKOYY4Pp23xSYZx7BgT1LspvOeuAZ-86qozCLeyQVHA',
     },
   },
 

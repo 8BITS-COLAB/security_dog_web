@@ -18,6 +18,8 @@
     >
       <template #activator="{ on, attrs }">
         <v-list>
+          <v-subheader>REGISTRIES</v-subheader>
+
           <v-list-item-group v-model="currentListItem" color="secondary">
             <registry-list-item
               v-for="(registry, i) in registries"
@@ -196,12 +198,9 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-import AddRegistry from '~/components/add-registry.vue'
-import registryListItem from '~/components/registry-list-item.vue'
 
 export default {
   name: 'IndexPage',
-  components: { registryListItem, AddRegistry },
   data: () => ({
     currentListItem: null,
     editDialog: null,
@@ -218,9 +217,9 @@ export default {
     },
   }),
   async fetch() {
-    await this.fetchCurrentUser()
     await this.fetchRegistries()
   },
+  fetchOnServer: true,
   methods: {
     ...mapActions('registries', [
       'fetchRegistries',
@@ -229,7 +228,6 @@ export default {
     ]),
     ...mapMutations('registries', ['setCurrentRegistry']),
     ...mapActions('shared-registries', ['shareRegistry']),
-    ...mapActions('users', ['fetchCurrentUser']),
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible
     },

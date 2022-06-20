@@ -1,16 +1,19 @@
 <template>
-  <v-list-item
-    v-bind="attrs"
-    v-on="on"
-    @click.stop="setCurrentRegistry(registry)"
-  >
-    <v-list-item-icon>
-      <v-icon> mdi-lock</v-icon>
-    </v-list-item-icon>
-    <v-list-item-content>
-      <v-list-item-title v-text="registry.name"></v-list-item-title>
-    </v-list-item-content>
-  </v-list-item>
+  <div>
+    <v-list-item
+      v-bind="attrs"
+      v-on="on"
+      @click.stop="setCurrentRegistry(registry)"
+    >
+      <v-list-item-icon>
+        <v-icon> mdi-lock</v-icon>
+      </v-list-item-icon>
+      <v-list-item-content>
+        <v-list-item-title v-text="registry.name"></v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider />
+  </div>
 </template>
 
 <script>

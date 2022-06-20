@@ -55,7 +55,10 @@
           @click="$router.push('/')"
         />
       </v-toolbar-title>
-      <add-registry @on-add-registry="onAddRegistry" />
+      <add-registry
+        v-show="$route.path === '/'"
+        @on-add-registry="onAddRegistry"
+      />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -66,6 +69,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'DefaultLayout',
   data() {
@@ -90,11 +95,16 @@ export default {
     }
   },
   methods: {
+    ...mapActions('users', ['fetchCurrentUser']),
     onAddRegistry(message) {
       this.snackbarMessage = message
       this.snackbar = true
     },
   },
+  async fetch() {
+    await this.fetchCurrentUser()
+  },
+  fetchOnServer: true,
 }
 </script>
 
