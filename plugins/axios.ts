@@ -15,7 +15,7 @@ export default function ({ $axios, redirect, store }: Context) {
       }
       return config
     } catch ({ response }) {
-      if (response?.status === 401) {
+      if ((response as any)?.status === 401) {
         store.commit('users/setCurrentUser', {})
         store.commit('registries/setRegistries', [])
         store.commit('registries/setCurrentRegistry', {})
