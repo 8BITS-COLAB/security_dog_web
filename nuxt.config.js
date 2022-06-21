@@ -50,8 +50,6 @@ export default {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      authorization:
-        'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzZWN1cml0eV9kb2dfYXBpIiwiZXhwIjoxNjU1ODQxNzM5LCJpYXQiOjE2NTU4NDA4MzksImlzcyI6InNlY3VyaXR5X2RvZ19hcGkiLCJqdGkiOiJjNDNkOWM5Zi1jNWFlLTRhZWItYWE4NS04NDAyYTQ3NThiMWUiLCJuYmYiOjE2NTU4NDA4MzgsInN1YiI6ImE3ZTgzYzI3LTZkNTAtNGNhZi04YzJhLWU2M2NhZjNiMzBiNiIsInR5cCI6ImFjY2VzcyJ9.h8o65quaZXE1sL2ZRM0YyLEtRujKH9RECeOgvpsIk-K65M8sj5B04U9Hi8V6VlEzJu31Tr0ChYF5ZsYFz4Z7sg',
     },
   },
 

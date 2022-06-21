@@ -10,7 +10,7 @@
       </template>
     </v-snackbar>
     <v-navigation-drawer
-      v-if="currentUser.id"
+      v-if="currentUser"
       color="primary"
       fixed
       :clipped="clipped"
@@ -44,10 +44,7 @@
       class="d-flex justify-flex-start align-center"
       hide-on-scroll
     >
-      <v-app-bar-nav-icon
-        v-if="currentUser.id"
-        @click.stop="drawer = !drawer"
-      />
+      <v-app-bar-nav-icon v-if="currentUser" @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <img
           id="logo"
