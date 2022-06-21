@@ -21,8 +21,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
-
+  plugins: ['~/plugins/axios'],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -51,8 +50,8 @@ export default {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzZWN1cml0eV9kb2dfYXBpIiwiZXhwIjoxNjU4MTgxODI0LCJpYXQiOjE2NTU3NjI2MjQsImlzcyI6InNlY3VyaXR5X2RvZ19hcGkiLCJqdGkiOiJlY2M0ODgwNS0wNDdiLTRlNDYtYWQ3Ni1hZDQwOGM0OTE2MzkiLCJuYmYiOjE2NTU3NjI2MjMsInN1YiI6ImE3ZTgzYzI3LTZkNTAtNGNhZi04YzJhLWU2M2NhZjNiMzBiNiIsInR5cCI6ImFjY2VzcyJ9.7RJ5ON8rPS-vbSTBkrUQ144AxR3qt2rmQUJnp3djR0MIKOYY4Pp23xSYZx7BgT1LspvOeuAZ-86qozCLeyQVHA',
+      authorization:
+        'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzZWN1cml0eV9kb2dfYXBpIiwiZXhwIjoxNjU1ODM2NDQ3LCJpYXQiOjE2NTU4MzU1NDcsImlzcyI6InNlY3VyaXR5X2RvZ19hcGkiLCJqdGkiOiI1NzU5NDZmZC1jMGE0LTQyYTQtYTBmMi0yMjQzODY2NDk5ZmYiLCJuYmYiOjE2NTU4MzU1NDYsInN1YiI6ImE3ZTgzYzI3LTZkNTAtNGNhZi04YzJhLWU2M2NhZjNiMzBiNiIsInR5cCI6ImFjY2VzcyJ9.6DsBcyi98qZa_fVV8Xcz4xfmJKUZzCOLWv6-9DvktFIJ2czYUdPAZWBTYCd-MAkRVUIElQKulAa-6wfmIQvnDg',
     },
   },
 
