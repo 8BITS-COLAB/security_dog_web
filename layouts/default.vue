@@ -10,6 +10,7 @@
       </template>
     </v-snackbar>
     <v-navigation-drawer
+      v-if="currentUser.id"
       color="primary"
       fixed
       :clipped="clipped"
@@ -43,7 +44,10 @@
       class="d-flex justify-flex-start align-center"
       hide-on-scroll
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon
+        v-if="currentUser.id"
+        @click.stop="drawer = !drawer"
+      />
       <v-toolbar-title>
         <img
           id="logo"
@@ -66,7 +70,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'DefaultLayout',
@@ -102,6 +106,11 @@ export default {
     await this.fetchCurrentUser()
   },
   fetchOnServer: true,
+  computed: {
+    ...mapGetters('users', {
+      currentUser: 'getCurrentUser',
+    }),
+  },
 }
 </script>
 
