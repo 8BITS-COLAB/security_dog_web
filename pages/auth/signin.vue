@@ -30,7 +30,7 @@
             :rules="passwordRules"
             @click:append="setPasswordVisibility"
           ></v-text-field>
-          <div class="text-center">
+          <div class="text-center mt-4">
             <v-btn
               :disabled="isSubmitButtonDisabled"
               class="signin-btn white--text"
