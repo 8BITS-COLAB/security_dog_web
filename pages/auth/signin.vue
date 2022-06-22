@@ -120,6 +120,11 @@ export default {
     margin: 0 auto;
     height: 96vh;
 
+    @media screen and (max-width: 1024px) {
+      width: 300%;
+      height: 600px;
+    }
+
     .left {
       padding: 30px;
       justify-content: center;
@@ -127,12 +132,20 @@ export default {
       box-sizing: border-box;
       display: flex;
       color: #293462;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+        width: 0;
+        height: 0;
+      }
     }
+
     .right {
       padding: 30px;
       box-sizing: border-box;
       background: #293462;
       color: #fff;
+
       h2 {
         text-align: center;
         margin: 30px 0;
