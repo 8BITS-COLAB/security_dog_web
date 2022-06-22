@@ -1,59 +1,47 @@
 <template>
-  <div>
-    <v-snackbar v-model="snackbar">
-      {{ snackbarText }}
-
-      <template #action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-    <v-card>
-      <v-card-title>
-        <span class="headline">SHARED REGISTRY</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container fluid>
-          <v-text-field
-            v-model="password"
-            label="Password"
-            :rules="passwordRules"
-            required
-          />
-          <v-textarea
-            v-if="registry"
-            :name="registry.id"
-            label="Registry"
-            :value="textAreaContent"
-          />
-        </v-container>
-      </v-card-text>
-      <v-card-actions class="d-flex justify-center align-center">
-        <v-btn
-          block
-          color="secondary"
-          :disabled="password.length < 6"
-          @click.stop="unlockRegistry"
-        >
-          UNLOCK
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
+  <v-card>
+    <v-card-title>
+      <span class="headline">SHARED REGISTRY</span>
+    </v-card-title>
+    <v-card-text>
+      <v-container fluid>
+        <v-text-field
+          v-model="password"
+          label="Password"
+          :rules="passwordRules"
+          required
+        />
+        <v-textarea
+          v-if="registry"
+          :name="registry.id"
+          label="Registry"
+          :value="textAreaContent"
+        />
+      </v-container>
+    </v-card-text>
+    <v-card-actions class="d-flex justify-center align-center">
+      <v-btn
+        block
+        color="secondary"
+        :disabled="password.length < 6"
+        @click.stop="unlockRegistry"
+      >
+        UNLOCK
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   data: () => ({
     password: '',
     registry: null,
-    snackbar: false,
-    snackbarText: '',
   }),
   methods: {
     ...mapActions('shared-registries', ['unlock']),
+    ...mapMutations('errors', ['setError']),
     async unlockRegistry() {
       try {
         const registry = await this.unlock({
@@ -63,11 +51,9 @@ export default {
 
         this.registry = registry
 
-        this.snackbarText = 'Registry unlocked'
-        this.snackbar = true
+        this.setError('Registry unlocked')
       } catch (error) {
-        this.snackbarText = `Invalid password`
-        this.snackbar = true
+        this.setError(`Invalid password`)
       }
     },
   },

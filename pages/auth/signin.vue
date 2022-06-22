@@ -11,7 +11,7 @@
         />
       </v-col>
       <v-col cols="4" class="right">
-        <h2>LOGIN</h2>
+        <h2>SIGN IN</h2>
         <v-form @submit.prevent="signin">
           <v-text-field
             v-model="signinParams.email"
