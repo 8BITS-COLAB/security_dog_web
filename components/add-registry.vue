@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   data: () => ({
@@ -93,13 +93,14 @@ export default {
   }),
   methods: {
     ...mapActions('registries', ['createRegistry']),
+    ...mapMutations('errors', ['setError']),
     async submit() {
       try {
         await this.createRegistry(this.registry)
 
-        this.$emit('on-event', 'Registry created')
+        this.setError('Registry created')
       } catch (error) {
-        this.$emit('on-event', 'Error on creating registry')
+        this.setError('Error on creating registry')
       } finally {
         this.dialog = false
         this.registry = {
@@ -113,7 +114,7 @@ export default {
     async copy(value) {
       await navigator.clipboard.writeText(value)
 
-      this.$emit('on-event', 'Copied to clipboard')
+      this.setError('Copied to clipboard')
     },
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible

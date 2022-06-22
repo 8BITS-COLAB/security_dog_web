@@ -228,6 +228,8 @@ export default {
     ]),
     ...mapMutations('registries', ['setCurrentRegistry']),
     ...mapActions('shared-registries', ['shareRegistry']),
+    ...mapActions('users', ['fetchCurrentUser']),
+
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible
     },
@@ -355,5 +357,6 @@ export default {
       immediate: true,
     },
   },
+  middleware: ['auth'],
 }
 </script>

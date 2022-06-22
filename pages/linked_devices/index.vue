@@ -51,6 +51,7 @@ export default {
     await this.fetchLinkedDevices()
   },
   fetchOnServer: true,
+  middleware: ['auth'],
 }
 </script>
 

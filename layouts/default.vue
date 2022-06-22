@@ -10,7 +10,7 @@
       </template>
     </v-snackbar>
     <v-navigation-drawer
-      v-if="currentUser"
+      v-if="isSignedIn"
       color="primary"
       fixed
       :clipped="clipped"
@@ -36,6 +36,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
+      v-if="isSignedIn"
       elevation="0"
       :clipped-left="clipped"
       fixed
@@ -44,7 +45,7 @@
       class="d-flex justify-flex-start align-center"
       hide-on-scroll
     >
-      <v-app-bar-nav-icon v-if="currentUser" @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <img
           id="logo"
@@ -56,7 +57,7 @@
           @click="$router.push('/')"
         />
       </v-toolbar-title>
-      <add-registry v-show="$route.path === '/'" @on-event="onEvent" />
+      <add-registry v-show="$route.path === '/'" />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'DefaultLayout',
@@ -92,21 +93,32 @@ export default {
       title: 'Security Dog',
     }
   },
-  methods: {
-    ...mapActions('users', ['fetchCurrentUser']),
-    onEvent(message) {
-      this.snackbarMessage = message
-      this.snackbar = true
-    },
-  },
-  async fetch() {
-    await this.fetchCurrentUser()
-  },
-  fetchOnServer: true,
   computed: {
     ...mapGetters('users', {
       currentUser: 'getCurrentUser',
     }),
+    ...mapGetters('errors', {
+      error: 'getError',
+    }),
+    isSignedIn() {
+      return this.currentUser && this.$route.path !== '/auth/signin'
+    },
+  },
+  methods: {
+    ...mapMutations('errors', ['setError']),
+  },
+  watch: {
+    error(newVal) {
+      if (newVal) {
+        this.snackbarMessage = newVal
+        this.snackbar = true
+      }
+    },
+    snackbar(newVal) {
+      if (!newVal) {
+        this.setError('')
+      }
+    },
   },
 }
 </script>

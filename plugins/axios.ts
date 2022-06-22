@@ -4,15 +4,12 @@ export default function ({ $axios, redirect, store }: Context) {
   // request
   $axios.onRequest(async (config: any) => {
     try {
-      if (!config.headers.common.authorization) {
-        return redirect('/auth/signin')
-      }
-
-      if (config.url !== '/auth/refresh_token') {
+      if (!config.url.includes('/auth')) {
         const { token } = await $axios.$get('/auth/refresh_token')
 
-        config.headers.common.authorization = `Bearer ${token}`
+        config.headers.authorization = `Bearer ${token}`
       }
+
       return config
     } catch ({ response }) {
       if ((response as any)?.status === 401) {
