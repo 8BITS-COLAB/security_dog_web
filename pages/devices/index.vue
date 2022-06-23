@@ -1,12 +1,12 @@
 <template>
   <v-list>
-    <v-subheader>LINKED DEVICES</v-subheader>
-    <v-list-item v-for="(item, i) in linkedDevices" :key="i">
+    <v-subheader>DEVICES</v-subheader>
+    <v-list-item v-for="(device, i) in devices" :key="i">
       <v-list-item-icon>
         <v-icon>mdi-devices</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
-        <v-list-item-title v-text="item.remote_ip"></v-list-item-title>
+        <v-list-item-title v-text="device.remote_ip"></v-list-item-title>
       </v-list-item-content>
       <v-tooltip bottom color="secondary">
         <template #activator="{ on, attrs }">
@@ -15,7 +15,7 @@
             color="secondary"
             elevation="0"
             text
-            @click.stop="unlinkLinkedDevice(item)"
+            @click.stop="unlinkDevice(device)"
             v-on="on"
           >
             <v-icon>mdi-link-variant-off</v-icon>
@@ -24,7 +24,7 @@
         <span>UNLINK DEVICE</span>
       </v-tooltip>
     </v-list-item>
-    <v-divider v-show="linkedDevices.length" />
+    <v-divider v-show="devices.length" />
   </v-list>
 </template>
 
@@ -32,23 +32,20 @@
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'LinkedDevices',
+  name: 'DevicesPage',
   data: () => ({
     currentListItem: null,
   }),
   methods: {
-    ...mapActions('linked-devices', [
-      'fetchLinkedDevices',
-      'unlinkLinkedDevice',
-    ]),
+    ...mapActions('devices', ['fetchDevices', 'unlinkDevice']),
   },
   computed: {
-    ...mapGetters('linked-devices', {
-      linkedDevices: 'getLinkedDevices',
+    ...mapGetters('devices', {
+      devices: 'getDevices',
     }),
   },
   async fetch() {
-    await this.fetchLinkedDevices()
+    await this.fetchDevices()
   },
   fetchOnServer: true,
   middleware: ['auth'],

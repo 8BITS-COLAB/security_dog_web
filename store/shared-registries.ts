@@ -16,13 +16,11 @@ export const actions = {
     const { id: currentUserId } = rootState.users.currentUser
 
     await (this as any).$axios.$post(
-      `/users/${currentUserId}/shared_registries`,
+      `/users/${currentUserId}/shared-registries`,
       {
-        shared_registry: {
-          registry_id: registryId,
-          password,
-          expires_at: expiresAt,
-        },
+        registry_id: registryId,
+        password,
+        expires_at: expiresAt,
       }
     )
 
@@ -33,7 +31,7 @@ export const actions = {
   },
   async unlock(_context: any, { key, password }: any) {
     const { data } = await (this as any).$axios.$get(
-      `/shared_registries/${key}`,
+      `/shared-registries/${key}`,
       {
         params: {
           password,

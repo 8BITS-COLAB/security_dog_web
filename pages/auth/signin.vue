@@ -36,6 +36,7 @@
               class="signin-btn white--text"
               type="submit"
               color="secondary"
+              elevation="0"
               dark
             >
               SIGN IN
@@ -90,11 +91,12 @@ export default {
     },
     async signin() {
       try {
-        const { token } = await this.$axios.$post('/auth/signin', {
-          user: this.signinParams,
-        })
+        const { access_token: accessToken } = await this.$axios.$post(
+          '/auth/signin',
+          this.signinParams
+        )
 
-        this.$axios.setHeader('authorization', `Bearer ${token}`)
+        this.$axios.setHeader('authorization', `Bearer ${accessToken}`)
 
         await this.fetchCurrentUser()
 

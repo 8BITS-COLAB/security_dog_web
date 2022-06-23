@@ -5,9 +5,19 @@ export default function ({ $axios, redirect, store }: Context) {
   $axios.onRequest(async (config: any) => {
     try {
       if (!config.url.includes('/auth')) {
-        const { token } = await $axios.$get('/auth/refresh_token')
+        const { access_token: accessToken } = await $axios.$get(
+          '/auth/refresh-token'
+        )
 
-        config.headers.authorization = `Bearer ${token}`
+        config.headers.authorization = `Bearer ${accessToken}`
+
+        if (config.method !== 'get') {
+          const { csrf_token: csrfToken } = await $axios.$get(
+            '/auth/csrf-token'
+          )
+
+          config.headers['X-CSRF-Token'] = csrfToken
+        }
       }
 
       return config
@@ -16,7 +26,7 @@ export default function ({ $axios, redirect, store }: Context) {
         store.commit('users/setCurrentUser', {})
         store.commit('registries/setRegistries', [])
         store.commit('registries/setCurrentRegistry', {})
-        store.commit('linked-devices/setLinkedDevices', [])
+        store.commit('devices/setDevices', [])
 
         return redirect('/auth/signin')
       }

@@ -26,11 +26,11 @@ export const mutations = {
 
 export const actions = {
   async fetchRegistries({ commit, rootState }: any) {
-    const { data } = await (this as any).$axios.$get(
+    const registries = await (this as any).$axios.$get(
       `/users/${rootState.users.currentUser.id}/registries`
     )
 
-    commit('setRegistries', data)
+    commit('setRegistries', registries)
   },
   async updateRegistry({ dispatch, rootState }: any, registry: Registry) {
     await (this as any).$axios.$put(
@@ -43,7 +43,7 @@ export const actions = {
   async createRegistry({ dispatch, rootState }: any, registry: Registry) {
     await (this as any).$axios.$post(
       `/users/${rootState.users.currentUser.id}/registries`,
-      { registry }
+      registry
     )
 
     dispatch('fetchRegistries')

@@ -86,8 +86,8 @@ export default {
         },
         {
           icon: 'mdi-devices',
-          title: 'LINKED DEVICES',
-          to: '/linked_devices',
+          title: 'DEVICES',
+          to: '/devices',
         },
       ],
       title: 'Security Dog',

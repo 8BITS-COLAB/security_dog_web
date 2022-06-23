@@ -243,7 +243,7 @@ export default {
         this.copy(
           `${
             process.env.HOST || 'http://localhost:3000'
-          }/shared_registries/${key}`
+          }/shared-registries/${key}`
         )
       } catch (error) {
         this.setError('Error on share registry')
