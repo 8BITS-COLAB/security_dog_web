@@ -69,7 +69,6 @@ export default {
       return `Site URL: ${this.registry.site_url}\nLogin: ${this.registry.login}\nPassword: ${this.registry.password}`
     },
   },
-  middleware: ['auth'],
 }
 </script>
 

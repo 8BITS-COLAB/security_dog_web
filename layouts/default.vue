@@ -101,7 +101,11 @@ export default {
       feedback: 'getFeedback',
     }),
     isSignedIn() {
-      return this.currentUser && this.$route.path !== '/auth/signin'
+      return (
+        this.currentUser &&
+        this.$route.path !== '/auth/signin' &&
+        !this.$route.path.includes('/shared-registries')
+      )
     },
   },
   methods: {
