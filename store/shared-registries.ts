@@ -32,7 +32,7 @@ export const actions = {
     const registry = await (this as any).$axios.$get(
       `/shared-registries/${id}`,
       {
-        password,
+        params: { password },
       }
     )
 

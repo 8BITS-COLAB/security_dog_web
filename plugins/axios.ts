@@ -4,7 +4,10 @@ export default function ({ $axios, redirect, store }: Context) {
   // request
   $axios.onRequest(async (config: any) => {
     try {
-      if (!config.url.includes('/auth')) {
+      if (
+        !config.url.includes('/auth') &&
+        !config.url.includes('/shared-registries')
+      ) {
         const { access_token: accessToken } = await $axios.$get(
           '/auth/refresh-token'
         )
