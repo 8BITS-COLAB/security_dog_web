@@ -3,7 +3,7 @@
     <v-subheader>DEVICES</v-subheader>
     <v-list-item v-for="(device, i) in devices" :key="i">
       <v-list-item-icon>
-        <v-icon>mdi-devices</v-icon>
+        <v-icon color="primary lighten-5">mdi-devices</v-icon>
       </v-list-item-icon>
       <v-list-item-content>
         <v-list-item-title v-text="device.remote_ip"></v-list-item-title>
