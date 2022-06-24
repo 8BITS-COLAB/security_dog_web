@@ -10,7 +10,7 @@
       <template #activator="{ on, attrs }">
         <v-btn
           id="new-registry"
-          elevation="0"
+          elevation="4"
           color="secondary"
           v-bind="attrs"
           v-on="on"

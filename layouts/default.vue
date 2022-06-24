@@ -24,7 +24,8 @@
           :to="item.to"
           router
           exact
-          color="#fff"
+          dark
+          color="tertiary"
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>

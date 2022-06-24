@@ -133,7 +133,7 @@ export default {
       align-items: center;
       box-sizing: border-box;
       display: flex;
-      color: #293462;
+      color: #0a1931;
 
       @media screen and (max-width: 1024px) {
         display: none;
@@ -145,7 +145,7 @@ export default {
     .right {
       padding: 30px;
       box-sizing: border-box;
-      background: #293462;
+      background: #0a1931;
       color: #fff;
 
       h2 {
@@ -154,7 +154,7 @@ export default {
       }
       .signin-btn {
         width: 100%;
-        color: #293462;
+        color: #0a1931;
       }
     }
   }

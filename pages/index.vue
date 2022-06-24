@@ -83,11 +83,7 @@
           width="500px"
         >
           <template #activator="{ on, attrs }">
-            <v-icon
-              v-bind="attrs"
-              color="primary lighten-4"
-              class="ml-2"
-              v-on="on"
+            <v-icon v-bind="attrs" color="secondary" class="ml-2" v-on="on"
               >mdi-share</v-icon
             >
           </template>
