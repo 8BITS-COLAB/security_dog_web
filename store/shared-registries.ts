@@ -11,34 +11,31 @@ export const state = (): State => ({
 export const actions = {
   async shareRegistry(
     { rootState }: any,
-    { registryId, password, expiresAt }: any
+    { registryId, password, expireAt }: any
   ) {
     const { id: currentUserId } = rootState.users.currentUser
 
-    await (this as any).$axios.$post(
+    const sharedRegistry = await (this as any).$axios.$post(
       `/users/${currentUserId}/shared-registries`,
       {
         registry_id: registryId,
         password,
-        expires_at: expiresAt,
+        expire_at: expireAt,
       }
     )
 
-    return {
-      password,
-      key: `${currentUserId}@${registryId}`,
-    }
+    return `${process.env.HOST || 'http://localhost:3000'}/shared-registries/${
+      sharedRegistry.id
+    }`
   },
-  async unlock(_context: any, { key, password }: any) {
-    const { data } = await (this as any).$axios.$get(
-      `/shared-registries/${key}`,
+  async unlock(_context: any, { id, password }: any) {
+    const registry = await (this as any).$axios.$get(
+      `/shared-registries/${id}`,
       {
-        params: {
-          password,
-        },
+        password,
       }
     )
 
-    return data
+    return registry
   },
 }

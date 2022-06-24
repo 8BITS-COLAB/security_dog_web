@@ -126,9 +126,9 @@
                 @click:append="copy(sharedRegistry.password)"
               />
               <p>EXPIRES AT</p>
-              <v-radio-group v-model="sharedRegistry.expiresAt" mandatory>
+              <v-radio-group v-model="sharedRegistry.expireAt" mandatory>
                 <v-radio
-                  v-for="(option, i) in sharedRegistryExpiresAtOptions"
+                  v-for="(option, i) in sharedRegistryExpireAtOptions"
                   :key="i"
                   :label="option.label"
                   :value="option.value"
@@ -201,7 +201,7 @@ export default {
     sharedRegistry: {
       registryId: '',
       password: '',
-      expiresAt: '1m',
+      expireAt: 1000,
     },
   }),
   async fetch() {
@@ -238,14 +238,10 @@ export default {
     },
     async shareCurrentRegistry() {
       try {
-        const { key } = await this.shareRegistry(this.sharedRegistry)
+        const url = await this.shareRegistry(this.sharedRegistry)
         this.setFeedback('Link copied to clipboard')
 
-        this.copy(
-          `${
-            process.env.HOST || 'http://localhost:3000'
-          }/shared-registries/${key}`
-        )
+        this.copy(url)
       } catch (error) {
         this.setFeedback('Error on share registry')
       } finally {
@@ -261,7 +257,7 @@ export default {
       registries: 'getRegistries',
       currentRegistry: 'getCurrentRegistry',
     }),
-    sharedRegistryExpiresAtOptions() {
+    sharedRegistryExpireAtOptions() {
       return [
         {
           label: '1 minute',
@@ -299,7 +295,7 @@ export default {
       return (
         this.sharedRegistry.password.length < 6 ||
         !this.sharedRegistry.registryId ||
-        !this.sharedRegistry.expiresAt
+        !this.sharedRegistry.expireAt
       )
     },
     loginRules() {

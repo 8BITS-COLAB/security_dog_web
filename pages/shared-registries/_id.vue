@@ -45,7 +45,7 @@ export default {
     async unlockRegistry() {
       try {
         const registry = await this.unlock({
-          key: this.$route.params.key,
+          id: this.$route.params.id,
           password: this.password,
         })
 

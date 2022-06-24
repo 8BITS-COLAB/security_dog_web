@@ -96,6 +96,7 @@ export default {
           this.signinParams
         )
 
+        localStorage.setItem('accessToken', accessToken)
         this.$axios.setHeader('authorization', `Bearer ${accessToken}`)
 
         await this.fetchCurrentUser()
