@@ -93,14 +93,14 @@ export default {
   }),
   methods: {
     ...mapActions('registries', ['createRegistry']),
-    ...mapMutations('errors', ['setError']),
+    ...mapMutations('feedbacks', ['setFeedback']),
     async submit() {
       try {
         await this.createRegistry(this.registry)
 
-        this.setError('Registry created')
+        this.setFeedback('Registry created')
       } catch (error) {
-        this.setError('Error on creating registry')
+        this.setFeedback('Error on creating registry')
       } finally {
         this.dialog = false
         this.registry = {
@@ -114,7 +114,7 @@ export default {
     async copy(value) {
       await navigator.clipboard.writeText(value)
 
-      this.setError('Copied to clipboard')
+      this.setFeedback('Copied to clipboard')
     },
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible

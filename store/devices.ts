@@ -27,8 +27,24 @@ export const actions = {
     commit('setDevices', devices)
   },
   async unlinkDevice({ dispatch, rootState }: any, device: Device) {
-    await (this as any).$axios.$delete(
-      `/users/${rootState.users.currentUser.id}/devices/${device.id}`
+    await (this as any).$axios.$patch(
+      `/users/${rootState.users.currentUser.id}/devices?remote_ip=${device.remote_ip}`,
+      {
+        is_linked: false,
+      }
+    )
+
+    dispatch('fetchDevices')
+  },
+
+  async blockDevice({ dispatch, rootState }: any, device: Device) {
+    await (this as any).$axios.$patch(
+      `/users/${rootState.users.currentUser.id}/devices?remote_ip=${device.remote_ip}`,
+      {
+        is_blocked: true,
+        is_linked: false,
+        is_trusted: false,
+      }
     )
 
     dispatch('fetchDevices')

@@ -23,6 +23,21 @@
         </template>
         <span>UNLINK DEVICE</span>
       </v-tooltip>
+      <v-tooltip bottom color="secondary">
+        <template #activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            color="secondary"
+            elevation="0"
+            text
+            @click.stop="blockDevice(device)"
+            v-on="on"
+          >
+            <v-icon>mdi-link-lock</v-icon>
+          </v-btn>
+        </template>
+        <span>BLOCK DEVICE</span>
+      </v-tooltip>
     </v-list-item>
     <v-divider v-show="devices.length" />
   </v-list>
@@ -37,7 +52,7 @@ export default {
     currentListItem: null,
   }),
   methods: {
-    ...mapActions('devices', ['fetchDevices', 'unlinkDevice']),
+    ...mapActions('devices', ['fetchDevices', 'unlinkDevice', 'blockDevice']),
   },
   computed: {
     ...mapGetters('devices', {

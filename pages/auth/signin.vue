@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     ...mapActions('users', ['fetchCurrentUser']),
-    ...mapMutations('errors', ['setError']),
+    ...mapMutations('feedbacks', ['setFeedback']),
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible
     },
@@ -101,8 +101,8 @@ export default {
         await this.fetchCurrentUser()
 
         this.$router.push('/')
-      } catch (error) {
-        this.setError('Invalid credentials')
+      } catch ({ response }) {
+        this.setFeedback(response.data.message)
       }
     },
   },

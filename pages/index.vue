@@ -173,6 +173,7 @@
                   deleteRegistry(updatedCurrentRegistry)
                   deleteDialog = false
                   editDialog = false
+                  setFeedback('Registry deleted')
                 "
               >
                 DELETE
@@ -214,7 +215,7 @@ export default {
       'deleteRegistry',
     ]),
     ...mapMutations('registries', ['setCurrentRegistry']),
-    ...mapMutations('errors', ['setError']),
+    ...mapMutations('feedbacks', ['setFeedback']),
     ...mapActions('shared-registries', ['shareRegistry']),
     ...mapActions('users', ['fetchCurrentUser']),
 
@@ -223,14 +224,14 @@ export default {
     },
     async copy(value) {
       await navigator.clipboard.writeText(value)
-      this.setError('Copied to clipboard')
+      this.setFeedback('Copied to clipboard')
     },
     async saveChanges() {
       try {
         await this.updateRegistry(this.updatedCurrentRegistry)
-        this.setError('Registry updated')
+        this.setFeedback('Registry updated')
       } catch (error) {
-        this.setError('Error on update registry')
+        this.setFeedback('Error on update registry')
       } finally {
         this.editDialog = false
       }
@@ -238,7 +239,7 @@ export default {
     async shareCurrentRegistry() {
       try {
         const { key } = await this.shareRegistry(this.sharedRegistry)
-        this.setError('Link copied to clipboard')
+        this.setFeedback('Link copied to clipboard')
 
         this.copy(
           `${
@@ -246,7 +247,7 @@ export default {
           }/shared-registries/${key}`
         )
       } catch (error) {
-        this.setError('Error on share registry')
+        this.setFeedback('Error on share registry')
       } finally {
         this.shareDialog = false
       }

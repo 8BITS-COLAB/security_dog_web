@@ -11,13 +11,13 @@ export default function ({ $axios, redirect, store }: Context) {
 
         config.headers.authorization = `Bearer ${accessToken}`
 
-        if (config.method !== 'get') {
-          const { csrf_token: csrfToken } = await $axios.$get(
-            '/auth/csrf-token'
-          )
+        // if (config.method !== 'get') {
+        //   const { csrf_token: csrfToken } = await $axios.$get(
+        //     '/auth/csrf-token'
+        //   )
 
-          config.headers['X-CSRF-Token'] = csrfToken
-        }
+        //   config.headers['X-CSRF-Token'] = csrfToken
+        // }
       }
 
       return config

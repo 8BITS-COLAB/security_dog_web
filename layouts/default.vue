@@ -97,18 +97,18 @@ export default {
     ...mapGetters('users', {
       currentUser: 'getCurrentUser',
     }),
-    ...mapGetters('errors', {
-      error: 'getError',
+    ...mapGetters('feedbacks', {
+      feedback: 'getFeedback',
     }),
     isSignedIn() {
       return this.currentUser && this.$route.path !== '/auth/signin'
     },
   },
   methods: {
-    ...mapMutations('errors', ['setError']),
+    ...mapMutations('feedbacks', ['setFeedback']),
   },
   watch: {
-    error(newVal) {
+    feedback(newVal) {
       if (newVal) {
         this.snackbarMessage = newVal
         this.snackbar = true
@@ -116,7 +116,7 @@ export default {
     },
     snackbar(newVal) {
       if (!newVal) {
-        this.setError('')
+        this.setFeedback('')
       }
     },
   },

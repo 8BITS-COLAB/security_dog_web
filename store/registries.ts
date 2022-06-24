@@ -33,7 +33,7 @@ export const actions = {
     commit('setRegistries', registries)
   },
   async updateRegistry({ dispatch, rootState }: any, registry: Registry) {
-    await (this as any).$axios.$put(
+    await (this as any).$axios.$patch(
       `/users/${rootState.users.currentUser.id}/registries/${registry.id}`,
       { registry }
     )

@@ -41,7 +41,7 @@ export default {
   }),
   methods: {
     ...mapActions('shared-registries', ['unlock']),
-    ...mapMutations('errors', ['setError']),
+    ...mapMutations('feedbacks', ['setFeedback']),
     async unlockRegistry() {
       try {
         const registry = await this.unlock({
@@ -51,9 +51,9 @@ export default {
 
         this.registry = registry
 
-        this.setError('Registry unlocked')
+        this.setFeedback('Registry unlocked')
       } catch (error) {
-        this.setError(`Invalid password`)
+        this.setFeedback(`Invalid password`)
       }
     },
   },
