@@ -18,7 +18,7 @@
             @click.stop="unlinkDevice(device)"
             v-on="on"
           >
-            <v-icon>mdi-link-variant-off</v-icon>
+            <v-icon>mdi-logout</v-icon>
           </v-btn>
         </template>
         <span>UNLINK DEVICE</span>
@@ -33,7 +33,7 @@
             @click.stop="blockDevice(device)"
             v-on="on"
           >
-            <v-icon>mdi-link-lock</v-icon>
+            <v-icon>mdi-cancel</v-icon>
           </v-btn>
         </template>
         <span>BLOCK DEVICE</span>
