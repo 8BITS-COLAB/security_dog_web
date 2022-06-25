@@ -92,6 +92,11 @@ export default {
           title: 'DEVICES',
           to: '/devices',
         },
+        {
+          icon: 'mdi-police-badge',
+          title: 'DETECTIVE',
+          to: '/detective',
+        },
       ],
       title: 'Security Dog',
     }
