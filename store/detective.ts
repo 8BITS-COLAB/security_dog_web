@@ -24,16 +24,12 @@ export const getters = {
 }
 
 export const actions = {
-  async fetchBreaches({ commit, dispatch }: any, key: string) {
+  async fetchBreaches({ commit }: any, key: string) {
     const breaches = await (this as any).$axios.$get(`/detective`, {
       params: {
         key,
       },
     })
-
-    if (!breaches) {
-      dispatch('feedbacks/setFeedback', 'No breaches found')
-    }
 
     commit('setBreaches', breaches || [])
   },
