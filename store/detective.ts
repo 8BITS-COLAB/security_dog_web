@@ -31,6 +31,10 @@ export const actions = {
       },
     })
 
+    if (!breaches) {
+      commit('feedbacks/setFeedback', 'No breaches found', { root: true })
+    }
+
     commit('setBreaches', breaches || [])
   },
 }

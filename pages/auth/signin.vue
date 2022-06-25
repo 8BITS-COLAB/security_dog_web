@@ -23,7 +23,7 @@
           <v-text-field
             v-model="signinParams.password"
             label="Password"
-            :append-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+            :append-icon="!isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
             required
             dark
             :type="isPasswordVisible ? 'text' : 'password'"
