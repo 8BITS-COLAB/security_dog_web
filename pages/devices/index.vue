@@ -58,7 +58,7 @@
         </v-list-item-group>
       </template>
       <v-card v-if="currentDevice">
-        <v-toolbar dark color="primary">
+        <v-toolbar dark color="secondary">
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
