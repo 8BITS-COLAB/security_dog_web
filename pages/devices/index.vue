@@ -38,6 +38,7 @@
         </template>
         <span>BLOCK DEVICE</span>
       </v-tooltip>
+      <signin-map :lat="device.lat" :lng="device.lng" />
     </v-list-item>
     <v-divider v-show="devices.length" />
   </v-list>
