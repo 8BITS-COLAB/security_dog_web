@@ -57,6 +57,10 @@ export default {
     signinParams: {
       email: '',
       password: '',
+      geo: {
+        lat: 0,
+        lng: 0,
+      },
     },
     isPasswordVisible: false,
   }),
@@ -89,21 +93,28 @@ export default {
     setPasswordVisibility() {
       this.isPasswordVisible = !this.isPasswordVisible
     },
-    async signin() {
-      try {
-        const { access_token: accessToken } = await this.$axios.$post(
-          '/auth/signin',
-          this.signinParams
-        )
+    signin() {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        try {
+          this.signinParams.geo = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          }
 
-        this.$axios.setHeader('authorization', `Bearer ${accessToken}`)
+          const { access_token: accessToken } = await this.$axios.$post(
+            '/auth/signin',
+            this.signinParams
+          )
 
-        await this.fetchCurrentUser()
+          this.$axios.setHeader('authorization', `Bearer ${accessToken}`)
 
-        this.$router.push('/')
-      } catch ({ response }) {
-        this.setFeedback(response.data.message)
-      }
+          await this.fetchCurrentUser()
+
+          this.$router.push('/')
+        } catch ({ response }) {
+          this.setFeedback(response.data.message)
+        }
+      })
     },
   },
   fetchOnServer: true,
